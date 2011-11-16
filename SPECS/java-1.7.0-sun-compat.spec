@@ -1,7 +1,7 @@
 %define origin          sun
-%define priority        1603
-%define javaver         1.6.0
-%define buildver        03
+%define priority        1703
+%define javaver         1.7.0
+%define buildver        01
 %define upstreamrel     fcs
 
 %define name            java-%{javaver}-%{origin}-compat
@@ -23,7 +23,7 @@
 %define fontdir         %{_datadir}/fonts/java
 %define xsldir          %{_datadir}/xml/%{name}-%{version}
 
-%ifarch %{ix86}
+%ifarch %{ix86} x86_64
 %define has_javaws      1
 %else
 %define has_javaws      0
@@ -110,7 +110,7 @@ Provides:       java-%{javaver}-plugin = %{version}
 Conflicts:      java-%{javaver}-ibm-plugin, java-%{javaver}-blackdown-plugin
 Conflicts:      java-%{javaver}-bea-plugin
 Obsoletes:      java-1.3.1-plugin, java-1.4.0-plugin, java-1.4.1-plugin
-Obsoletes:      java-1.4.2-plugin, java-1.5.0-plugin
+Obsoletes:      java-1.4.2-plugin, java-1.5.0-plugin, java-1.6.0-plugin
 Requires(preun): %{_bindir}/find
 %endif
 # -fonts
@@ -123,7 +123,7 @@ Requires(postun): %{_bindir}/find
 Conflicts:      java-%{javaver}-ibm-fonts, java-%{javaver}-blackdown-fonts
 Conflicts:      java-%{javaver}-bea-fonts
 Obsoletes:      java-1.3.1-fonts, java-1.4.0-fonts, java-1.4.1-fonts
-Obsoletes:      java-1.4.2-fonts, java-1.5.0-fonts
+Obsoletes:      java-1.4.2-fonts, java-1.5.0-fonts, java-1.6.0-fonts
 # -alsa
 Provides:       java-%{javaver}-%{origin}-alsa = %{epoch}:%{version}-%{release}
 # -jdbc
@@ -164,8 +164,15 @@ ln -s %{_libdir} $RPM_BUILD_ROOT%{upstreamdir}/lib/i386
 echo %{upstreamdir}/lib/i386 >> %{name}-%{version}-all.files
 %else
 %ifarch x86_64
-ln -s %{_libdir} $RPM_BUILD_ROOT%{upstreamdir}/lib/amd64
-echo %{upstreamdir}/lib/amd64 >> %{name}-%{version}-all.files
+install -d -m 755 $RPM_BUILD_ROOT%{upstreamdir}/lib/amd64_sun
+echo "%%ghost %%dir %{upstreamdir}/lib/amd64_sun"
+install -d -m 755 $RPM_BUILD_ROOT%{_libdir}
+echo "%%ghost %%dir %{_libdir}"
+for i in %{upstreamdir}/lib/amd64/* ; do
+  f=$(basename $i)
+  ln -s %{upstreamdir}/lib/amd64_sun/$f $RPM_BUILD_ROOT%{_libdir}/$f
+  echo %{_libdir}/$f >> %{name}-%{version}-all.files
+done
 %endif
 %endif
 
@@ -291,6 +298,14 @@ done
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+
+%pre
+# native library paths
+%ifarch x86_64
+mv %{upstreamdir}/lib/amd64 %{upstreamdir}/lib/amd64_sun
+ln -s %{_libdir} %{upstreamdir}/lib/amd64
+%endif
 
 
 %preun
@@ -551,6 +566,12 @@ update-alternatives --remove java_sdk_%{javaver} %{_jvmdir}/%{sdklnk}
 
 } || :
 
+# native library paths
+%ifarch x86_64
+rm %{upstreamdir}/lib/amd64
+mv %{upstreamdir}/lib/amd64_sun %{upstreamdir}/lib/amd64
+%endif
+
 
 %files -f %{name}-%{version}.files
 %defattr(-,root,root,-)
@@ -562,6 +583,8 @@ update-alternatives --remove java_sdk_%{javaver} %{_jvmdir}/%{sdklnk}
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/cacerts
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/java.policy
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/java.security
+%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/blacklist
+%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/trusted.libraries
 %if %{has_javaws}
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/javaws.policy
 %endif
@@ -589,6 +612,9 @@ update-alternatives --remove java_sdk_%{javaver} %{_jvmdir}/%{sdklnk}
 
 
 %changelog
+* Tue Nov 15 2011 Aaron Wirtz <github.com/p120ph37> - 0:1.7.0.01-1jpp
+- 1.7.0_01.
+
 * Sat Oct  6 2007 Ville Skyttä <scop at jpackage.org> - 0:1.6.0.03-1jpp
 - 1.6.0_03.
 
