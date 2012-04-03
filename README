@@ -19,8 +19,8 @@ Example installation of Sun Java SE 7 JDK + JPackage Ant 1.8.2 on CentOS EL5 64-
 #   here with a graphical browser, register with an email address, and log in to download the JDK rpm.
 #        http://www.oracle.com/technetwork/java/javase/downloads/jdk-7u1-download-513651.html
 ###
-wget http://p120ph37.github.com/java-1.7.0-sun-compat/RPMS/x86_64/java-1.7.0-sun-compat-1.7.0.01-1jpp.x86_64.rpm
 wget http://mirrors.dotsrc.org/jpackage/6.0/generic/free/RPMS/jpackage-utils-5.0.0-7.jpp6.noarch.rpm
+wget http://p120ph37.github.com/java-1.7.0-sun-compat/RPMS/x86_64/java-1.7.0-sun-compat-1.7.0.01-1jpp.x86_64.rpm
 wget http://mirrors.dotsrc.org/jpackage/6.0/generic/free/RPMS/xalan-j2-2.7.1-8.jbossorg_1.jpp6.noarch.rpm
 wget http://mirrors.dotsrc.org/jpackage/6.0/generic/free/RPMS/xml-commons-1.3.04-10.jpp6.noarch.rpm
 wget http://mirrors.dotsrc.org/jpackage/6.0/generic/free/RPMS/xml-commons-jaxp-1.3-apis-1.3.04-10.jpp6.noarch.rpm
@@ -28,8 +28,8 @@ wget http://mirrors.dotsrc.org/jpackage/6.0/generic/free/RPMS/xml-commons-resolv
 wget http://mirrors.dotsrc.org/jpackage/6.0/generic/free/RPMS/xerces-j2-2.9.1-2.jpp6.noarch.rpm
 wget http://mirrors.dotsrc.org/jpackage/6.0/generic/free/RPMS/ant-1.8.2-5.jpp6.noarch.rpm
 rpm -i jdk-7u1-linux-x64.rpm
-rpm -i java-1.7.0-sun-compat-1.7.0.01-1jpp.x86_64.rpm
 rpm -i jpackage-utils-5.0.0-7.jpp6.noarch.rpm
+rpm -i java-1.7.0-sun-compat-1.7.0.01-1jpp.x86_64.rpm
 rpm -i xalan-j2-2.7.1-8.jbossorg_1.jpp6.noarch.rpm
 rpm -i xml-commons-1.3.04-10.jpp6.noarch.rpm
 rpm -i xml-commons-jaxp-1.3-apis-1.3.04-10.jpp6.noarch.rpm
