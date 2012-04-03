@@ -12,7 +12,13 @@ http://mirrors.dotsrc.org/jpackage/5.0/generic/non-free/SRPMS/java-1.6.0-sun-com
 
 Example installation of Sun Java SE 7 JDK + JPackage Ant 1.8.2 on CentOS EL5 64-bit:
 
-wget http://download.oracle.com/otn-pub/java/jdk/7u1-b08/jdk-7u1-linux-x64.rpm -O jdk-7u1-linux-x64.rpm
+### 
+# wget http://download.oracle.com/otn-pub/java/jdk/7u1-b08/jdk-7u1-linux-x64.rpm
+#
+#   Oracle has disabled direct HTTP access to their downloads, so you will need to visit their site
+#   here with a graphical browser, register with an email address, and log in to download the JDK rpm.
+#        http://www.oracle.com/technetwork/java/javase/downloads/jdk-7u1-download-513651.html
+###
 wget http://p120ph37.github.com/java-1.7.0-sun-compat/RPMS/x86_64/java-1.7.0-sun-compat-1.7.0.01-1jpp.x86_64.rpm
 wget http://mirrors.dotsrc.org/jpackage/6.0/generic/free/RPMS/jpackage-utils-5.0.0-7.jpp6.noarch.rpm
 wget http://mirrors.dotsrc.org/jpackage/6.0/generic/free/RPMS/xalan-j2-2.7.1-8.jbossorg_1.jpp6.noarch.rpm
